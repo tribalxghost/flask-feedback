@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{{ form.hidden_tag() }}
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+<h1>Edit Feed</h1>
+<div class="card">
+<form action="/feedback/{{feed.id}}/update" method="POST">
+    {{ form.csrf_token }}
+{% for field in form 
+    if field.widget.input_type != 'hidden' %}
+<div class="card-body">
+{{ field.label }}
+{{ field(class_="form-control") }}
+
+</div>
+{% endfor %}
+<button class="btn btn-primary " type="submit">Submit</button>
+<a class="btn btn-danger" href="/feedback/{{feed.id}}/delete" type="submit">Delete</a>
+
+</div>
+</form>
+{% endblock %}

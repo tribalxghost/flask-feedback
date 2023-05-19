@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{{ form.hidden_tag() }}
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+<h1>Register</h1>
+<div class="card">
+<form action="/register" method="POST">
+    {{ form.csrf_token }}
+{% for field in form 
+    if field.widget.input_type != 'hidden' %}
+<div class="card-body">
+{{ field.label }}
+{{ field(class_="form-control") }}
+
+</div>
+{% endfor %}
+<button class="btn btn-primary " type="submit">Submit</button>
+
+</div>
+</form>
+{% endblock %}
